@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Help Panel</title>
+</head>
+<body>
+    <div class="side-menu">
+        <img class="logo" src="logo.png" alt="Logo">
+        <ul>
+            <li><a href="Serviyo.html"><span>Dashboard</span> </li>
+                <li><a href="Servers.html"><span>Servers</span> </li>
+                <li><a href="Users.html"><span>Users</span> </li>
+                <li><a href="Help.html"><span>Help</span></li>
+                    <li><a href="setting .html"><span>Setting</span></li>
+        </ul>
+    </div>
+    <div class="container">
+        <div class="header">
+            <div class="nav">
+                <div class="search">
+                    <input type="text" placeholder="Search..">
+                    <button type="submit"><img src="search.png" alt=""></button>
+                </div>
+                <div class="user">
+                    <a href="#" class="btn">Find more Help</a>
+                    <img src="notifications.png" alt="">
+                    <div class="img-case">
+                        <img src="user.png" alt="">
+            </div>
+        </div>
+    </div>
+	</div>
+	            <div class="cards">
+                <div class="card">
+                    <div class="box">
+                        <h1>54</h1>
+                        <h3>USEVERS</h3>
+                    </div>
+                    <div class="icon-case">
+                        <img src="students.png" alt="">
+                    </div>
+                </div>
+                
+                
+            </div>
+<body>
+    <header>
+        <h1>Admin Settings</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="#general">General Settings</a></li>
+            <li><a href="#security">Security Settings</a></li>
+            <li><a href="#notifications">Notification Settings</a></li>
+        </ul>
+    </nav>
+    <main>
+        <section id="general">
+            <h2>General Settings</h2>
+            <form>
+                <label for="siteTitle">Site Title:</label>
+                <input type="text" id="siteTitle" name="siteTitle" placeholder="Enter site title"><br><br>
+
+                <label for="siteDescription">Site Description:</label>
+                <textarea id="siteDescription" name="siteDescription" placeholder="Enter site description"></textarea><br><br>
+
+                <button type="submit">Save</button>
+            </form>
+        </section>
+        
+        <section id="security">
+            <h2>Security Settings</h2>
+            <form>
+                <label for="password">Change Password:</label>
+                <input type="password" id="password" name="password" placeholder="Enter new password"><br><br>
+
+                <label for="confirmPassword">Confirm Password:</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm new password"><br><br>
+
+                <button type="submit">Change Password</button>
+            </form>
+        </section>
+        
+        <section id="notifications">
+            <h2>Notification Settings</h2>
+            <form>
+                <label for="emailNotifications">Email Notifications:</label>
+                <input type="checkbox" id="emailNotifications" name="emailNotifications"><br><br>
+
+                <label for="pushNotifications">Push Notifications:</label>
+                <input type="checkbox" id="pushNotifications" name="pushNotifications"><br><br>
+
+                <button type="submit">Save</button>
+            </form>
+        </section>
+    </main>
+  
+        <canvas id="liveGraph" width="400" height="200"></canvas>
+    
+        <script>
+            const canvas = document.getElementById('liveGraph');
+            const ctx = canvas.getContext('2d');
+    
+            const data = {
+                users: [],
+                providers: [],
+            };
+    
+            const maxDataPoints = 10; // Number of data points to display
+            const updateInterval = 1000; // Update interval in milliseconds
+    
+            function getRandomValue() {
+                return Math.floor(Math.random() * 50) + 10; // Random value between 10 and 60
+            }
+    
+            function updateGraph() {
+                const currentTime = new Date().toLocaleTimeString();
+                data.users.push(getRandomValue());
+                data.providers.push(getRandomValue());
+    
+                if (data.users.length > maxDataPoints) {
+                    data.users.shift();
+                    data.providers.shift();
+                }
+    
+                drawGraph();
+            }
+    
+            function drawGraph() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+                const maxDataValue = Math.max(...data.users, ...data.providers);
+    
+                const barWidth = canvas.width / (maxDataPoints + 1);
+                const barSpacing = 10;
+                const maxValueHeight = canvas.height - 20;
+    
+                for (let i = 0; i < data.users.length; i++) {
+                    const x = i * (barWidth + barSpacing);
+                    const userHeight = (data.users[i] / maxDataValue) * maxValueHeight;
+                    const providerHeight = (data.providers[i] / maxDataValue) * maxValueHeight;
+    
+                    ctx.fillStyle = 'blue'; // Users
+                    ctx.fillRect(x, canvas.height - userHeight, barWidth, userHeight);
+    
+                    ctx.fillStyle = 'green'; // Providers
+                    ctx.fillRect(x, canvas.height - providerHeight, barWidth, providerHeight);
+    
+                    ctx.fillStyle = 'black';
+                    ctx.fillText(data.users[i], x + barWidth / 2 - 10, canvas.height - userHeight - 10);
+                    ctx.fillText(data.providers[i], x + barWidth / 2 - 10, canvas.height - providerHeight - 10);
+                }
+            }
+    
+            setInterval(updateGraph, updateInterval);
+        </script>
+</body>
+</html>
